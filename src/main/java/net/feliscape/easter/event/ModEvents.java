@@ -48,8 +48,8 @@ public class ModEvents {
             ItemStack itemStack = player.getMainHandItem();
 
             if (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0 && !itemStack.is(Items.SHEARS) &&
-                    blockState.is(ModTags.Blocks.CAN_DROP_EGG) && level.getRandom().nextFloat() < EasterEggItem.BLOCK_BREAK_CHANCE){
-                EasterEggItem.dropRandomFromBlock(level, pos, player);
+                    blockState.is(ModTags.Blocks.CAN_DROP_EGG) && level.getRandom().nextFloat() < EggTracker.BLOCK_BREAK_CHANCE){
+                EggTracker.giveRandomEggsToPlayer(player, 1, true);
             }
         }
 
@@ -73,24 +73,23 @@ public class ModEvents {
             }
 
             if (entity.getType() == EntityType.ENDER_DRAGON){
-                entity.spawnAtLocation(new ItemStack(ModItems.GOLDEN_EGG.get()));
-                if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND.get());
-                EasterEggItem.dropRandomFromEntity(entity, 4, player);
+                EggTracker.giveGoldenEggsToPlayer(player, 1, true);
+                EggTracker.giveRandomEggsToPlayer(player, 4, true);
 
             } else if (entity.getType() == EntityType.WITHER){
-                entity.spawnAtLocation(new ItemStack(ModItems.GOLDEN_EGG.get()));
-                if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND.get());
-                EasterEggItem.dropRandomFromEntity(entity, 2, player);
+                EggTracker.giveGoldenEggsToPlayer(player, 1, true);
+                EggTracker.giveRandomEggsToPlayer(player, 2, true);
 
             } else if (entity.getType() == EntityType.ELDER_GUARDIAN){
-                EasterEggItem.dropRandomFromEntity(entity, player);
+                EggTracker.giveRandomEggsToPlayer(player, 1, true);
 
             } else if (entity.getType() == EntityType.WARDEN){
-                EasterEggItem.dropRandomFromEntity(entity, player);
+                EggTracker.giveRandomEggsToPlayer(player, 1, true);
 
             } else if (entity instanceof Monster){
-                if (randomSource.nextFloat() < EasterEggItem.MONSTER_DROP_CHANCE)
-                    EasterEggItem.dropRandomFromEntity(entity, player);
+                if (randomSource.nextFloat() < EggTracker.MONSTER_DROP_CHANCE)
+                    //EasterEggItem.dropRandomFromEntity(entity, player);
+                    EggTracker.giveRandomEggsToPlayer(player, 1, true);
             }
         }
 

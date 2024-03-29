@@ -19,9 +19,9 @@ public class EggTrackerHudOverlay {
 
         RenderSystem.defaultBlendFunc();
 
-        guiGraphics.blit(TEXTURE, 12, 12, 0, 0, 8, 8);
-        guiGraphics.drawString(gui.getFont(), Integer.toString(easterEggs), 16, 4, ColorUtil.getIntColor("#ffffff"));
-        guiGraphics.blit(TEXTURE, 12, 22, 8, 0, 8, 8);
-        guiGraphics.drawString(gui.getFont(), Integer.toString(goldenEggs), 16, 4, ColorUtil.getIntColor("#ffffff"));
+        guiGraphics.blit(TEXTURE, 2, 2, 0, 0, 8, 8);
+        guiGraphics.drawString(gui.getFont(), Integer.toString(easterEggs), 12, 2, ColorUtil.getIntColor("#ffffff"));
+        guiGraphics.blit(TEXTURE, 2, 12, 8, 0, 8, 8);
+        guiGraphics.drawString(gui.getFont(), Integer.toString(goldenEggs), 12, 12, ColorUtil.getIntColor("#ffffff"));
     });
 }

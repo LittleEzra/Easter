@@ -1,5 +1,6 @@
 package net.feliscape.easter.item.custom;
 
+import net.feliscape.easter.capability.EggTracker;
 import net.feliscape.easter.datagen.advancements.criterion.FoundEasterEggsTrigger;
 import net.feliscape.easter.datagen.advancements.criterion.ModCriteriaTriggers;
 import net.feliscape.easter.item.ModItems;
@@ -22,9 +23,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class EasterEggItem extends Item {
-    public static final float BLOCK_BREAK_CHANCE = 0.04F;
-    public static final float MONSTER_DROP_CHANCE = 0.05F;
-    public static final float GOLDEN_EGG_CHANCE = 0.01F;
+
 
     public static List<Supplier<Item>> EASTER_EGGS = List.of(
             ModItems.STRIPED_RED_EGG,
@@ -40,7 +39,7 @@ public class EasterEggItem extends Item {
     }
 
     public static Item getRandomEgg(RandomSource pRandom){
-        return pRandom.nextFloat() < GOLDEN_EGG_CHANCE ? ModItems.GOLDEN_EGG.get() : EASTER_EGGS.get(pRandom.nextInt(EASTER_EGGS.size())).get();
+        return pRandom.nextFloat() < EggTracker.GOLDEN_EGG_CHANCE ? ModItems.GOLDEN_EGG.get() : EASTER_EGGS.get(pRandom.nextInt(EASTER_EGGS.size())).get();
     }
     public static void dropRandomFromBlock(Level pLevel, BlockPos pPos){
         Block.popResource(pLevel, pPos, new ItemStack(getRandomEgg(pLevel.getRandom())));
