@@ -1,13 +1,13 @@
 package net.feliscape.easter;
 
 import com.mojang.logging.LogUtils;
-import net.feliscape.easter.block.ModBlocks;
-import net.feliscape.easter.entity.ModEntityTypes;
+import net.feliscape.easter.datagen.advancements.criterion.ModCriteriaTriggers;
 import net.feliscape.easter.item.ModCreativeModeTabs;
 import net.feliscape.easter.item.ModItems;
 import net.feliscape.easter.loot.ModLootModifiers;
 import net.feliscape.easter.networking.ModMessages;
 import net.feliscape.easter.sound.ModSounds;
+import net.feliscape.easter.stats.ModStats;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -42,6 +42,7 @@ public class Easter
 
         ModSounds.register(modEventBus);
 
+        ModStats.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
@@ -52,7 +53,6 @@ public class Easter
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-        modEventBus.addListener(this::createRegistries);
         //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC); // Add alongside the config class
     }
 
@@ -64,6 +64,8 @@ public class Easter
     {
         event.enqueueWork(() -> {
             ModMessages.register();
+
+            ModCriteriaTriggers.registerTriggers();
         });
     }
 
@@ -72,28 +74,21 @@ public class Easter
     {
 
     }
-    // Add the example block item to the building blocks tab
-    private void createRegistries(NewRegistryEvent event)
-    {
-        event.create(new RegistryBuilder<ResourceLocation>()
-                .setName(asResource("custom_stat"))
-        );
-    }
 
     public static void printDebug(String line){
-        LOGGER.debug(line);
+        LOGGER.debug("[" + MOD_ID + "] " + line);
     }
     public static void printDebug(boolean value){
-        LOGGER.debug(((Boolean)value).toString());
+        printDebug(((Boolean)value).toString());
     }
     public static void printDebug(int value){
-        LOGGER.debug(((Integer)value).toString());
+        printDebug(((Integer)value).toString());
     }
     public static void printDebug(float value){
-        LOGGER.debug(((Float)value).toString());
+        printDebug(((Float)value).toString());
     }
     public static void printDebug(double value){
-        LOGGER.debug(((Double)value).toString());
+        printDebug(((Double)value).toString());
     }
 
     public static void printServer(String line, @Nullable MinecraftServer server){

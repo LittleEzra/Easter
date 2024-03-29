@@ -1,23 +1,23 @@
 package net.feliscape.easter.stats;
 
 import net.feliscape.easter.Easter;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.stats.Stat;
-import net.minecraft.stats.StatFormatter;
-import net.minecraft.stats.Stats;
+import net.minecraft.stats.StatType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModStats {
+    public static final DeferredRegister<ResourceLocation> CUSTOM_STATS =
+            DeferredRegister.create(Registries.CUSTOM_STAT, Easter.MOD_ID);
 
-    public static final ResourceLocation EASTER_EGGS_FOUND = makeCustomStat("easter_eggs_found", StatFormatter.DEFAULT);
+    public static final RegistryObject<ResourceLocation> EASTER_EGGS_FOUND = CUSTOM_STATS.register("custom",
+            () -> Easter.asResource("easter_eggs_found"));
 
-    private static ResourceLocation makeCustomStat(String pKey, StatFormatter pFormatter) {
-        ResourceLocation resourcelocation = new ResourceLocation(Easter.MOD_ID, pKey);
-        Registry.register(BuiltInRegistries.CUSTOM_STAT, pKey, resourcelocation);
-        Stats.CUSTOM.get(resourcelocation, pFormatter);
-        return resourcelocation;
+    public static void register(IEventBus eventBus){
+        CUSTOM_STATS.register(eventBus);
     }
 }

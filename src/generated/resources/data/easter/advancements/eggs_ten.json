@@ -4,7 +4,7 @@
     "0": {
       "conditions": {
         "count": {
-          "min": 5
+          "min": 10
         }
       },
       "trigger": "easter:found_easter_eggs"
@@ -14,16 +14,16 @@
     "announce_to_chat": false,
     "description": {
       "color": "#DBA213",
-      "translate": "advancement.easter.eggs_5.description"
+      "translate": "advancement.easter.eggs_ten.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "easter:grass_egg"
+      "item": "easter:green_dots_egg"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.easter.eggs_5"
+      "translate": "advancement.easter.eggs_ten"
     }
   },
   "requirements": [

@@ -26,7 +26,6 @@ public class ModAdvancement {
 
     static final ResourceLocation BACKGROUND = Easter.asResource("textures/gui/advancements.png");
     static final String LANG = "advancement." + Easter.MOD_ID + ".";
-    static final String SECRET_SUFFIX = "\n\u00A77(Hidden Advancement)";
 
     private Advancement.Builder builder;
     private ModAdvancement parent;
@@ -47,9 +46,6 @@ public class ModAdvancement {
         builder.display(t.icon, Component.translatable(titleKey()),
                 Component.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
                 id.equals("root") ? BACKGROUND : null, t.type.frame, t.type.toast, t.type.announce, t.type.hide);
-
-        if (t.type == TaskType.SECRET)
-            description += SECRET_SUFFIX;
 
         ModAdvancements.ENTRIES.add(this);
     }
@@ -163,8 +159,7 @@ public class ModAdvancement {
             return externalTrigger(InventoryChangeTrigger.TriggerInstance.hasItems(icon.getItem()));
         }
         public Builder whenGet(ItemLike... items) {
-            InventoryChangeTrigger.TriggerInstance.hasItems(items);
-            return this;
+            return externalTrigger(InventoryChangeTrigger.TriggerInstance.hasItems(items));
         }
         public Builder whenGotAll(ItemLike... items) {
             for(ItemLike item : items) {

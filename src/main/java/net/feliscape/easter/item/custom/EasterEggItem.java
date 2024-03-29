@@ -1,10 +1,13 @@
 package net.feliscape.easter.item.custom;
 
+import net.feliscape.easter.datagen.advancements.criterion.FoundEasterEggsTrigger;
+import net.feliscape.easter.datagen.advancements.criterion.ModCriteriaTriggers;
 import net.feliscape.easter.item.ModItems;
 import net.feliscape.easter.stats.ModStats;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -13,8 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -45,25 +46,42 @@ public class EasterEggItem extends Item {
         Block.popResource(pLevel, pPos, new ItemStack(getRandomEgg(pLevel.getRandom())));
     }
     public static void dropRandomFromBlock(Level pLevel, BlockPos pPos, @Nullable Player player){
-        Block.popResource(pLevel, pPos, new ItemStack(getRandomEgg(pLevel.getRandom())));
-        if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND);
+        dropRandomFromBlock(pLevel, pPos);
+
+        if (player != null) {
+            player.awardStat(ModStats.EASTER_EGGS_FOUND.get());
+            if (player instanceof ServerPlayer){
+                ModCriteriaTriggers.FOUND_EASTER_EGGS.trigger(((ServerPlayer) player));
+            }
+        }
     }
     public static void dropRandomFromEntity(Entity entity){
         entity.spawnAtLocation(new ItemStack(getRandomEgg(entity.level().getRandom())));
     }
     public static void dropRandomFromEntity(Entity entity, int count){
         for (int i = 0; i < count; i++){
-            entity.spawnAtLocation(new ItemStack(getRandomEgg(entity.level().getRandom())));
+            dropRandomFromEntity(entity);
         }
     }
     public static void dropRandomFromEntity(Entity entity, @Nullable Player player){
-        entity.spawnAtLocation(new ItemStack(getRandomEgg(entity.level().getRandom())));
-        if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND);
+        dropRandomFromEntity(entity);
+
+        if (player != null) {
+            player.awardStat(ModStats.EASTER_EGGS_FOUND.get());
+            if (player instanceof ServerPlayer){
+                ModCriteriaTriggers.FOUND_EASTER_EGGS.trigger(((ServerPlayer) player));
+            }
+        }
     }
     public static void dropRandomFromEntity(Entity entity, int count, @Nullable Player player){
         for (int i = 0; i < count; i++){
-            entity.spawnAtLocation(new ItemStack(getRandomEgg(entity.level().getRandom())));
-            if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND);
+            dropRandomFromEntity(entity);
+        }
+        if (player != null) {
+            player.awardStat(ModStats.EASTER_EGGS_FOUND.get(), count);
+            if (player instanceof ServerPlayer){
+                ModCriteriaTriggers.FOUND_EASTER_EGGS.trigger(((ServerPlayer) player));
+            }
         }
     }
 

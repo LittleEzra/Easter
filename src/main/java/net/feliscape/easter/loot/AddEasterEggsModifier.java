@@ -5,7 +5,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.feliscape.easter.item.custom.EasterEggItem;
-import net.feliscape.easter.stats.ModStatTypes;
 import net.feliscape.easter.stats.ModStats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -47,7 +46,7 @@ public class AddEasterEggsModifier extends LootModifier {
         int count = context.getRandom().nextInt(minCount, maxCount);
         for (int i = 0; i < count; i++){
             if (entity instanceof Player){
-                ((Player) entity).awardStat(ModStats.EASTER_EGGS_FOUND);
+                ((Player) entity).awardStat(ModStats.EASTER_EGGS_FOUND.get());
             }
             generatedLoot.add(new ItemStack(EasterEggItem.getRandomEgg(context.getRandom())));
         }

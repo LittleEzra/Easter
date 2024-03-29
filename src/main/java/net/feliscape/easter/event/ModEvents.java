@@ -1,11 +1,17 @@
 package net.feliscape.easter.event;
 
 import net.feliscape.easter.Easter;
+import net.feliscape.easter.capability.EggTracker;
+import net.feliscape.easter.capability.EggTrackerProvider;
 import net.feliscape.easter.item.ModItems;
 import net.feliscape.easter.item.custom.EasterEggItem;
+import net.feliscape.easter.networking.ModMessages;
+import net.feliscape.easter.networking.packets.EggDataSyncS2CPacket;
 import net.feliscape.easter.stats.ModStats;
 import net.feliscape.easter.util.ModTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +25,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -63,14 +73,14 @@ public class ModEvents {
             }
 
             if (entity.getType() == EntityType.ENDER_DRAGON){
-                EasterEggItem.dropRandomFromEntity(entity, 4, player);
                 entity.spawnAtLocation(new ItemStack(ModItems.GOLDEN_EGG.get()));
-                if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND);
+                if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND.get());
+                EasterEggItem.dropRandomFromEntity(entity, 4, player);
 
             } else if (entity.getType() == EntityType.WITHER){
-                EasterEggItem.dropRandomFromEntity(entity, 2, player);
                 entity.spawnAtLocation(new ItemStack(ModItems.GOLDEN_EGG.get()));
-                if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND);
+                if (player != null) player.awardStat(ModStats.EASTER_EGGS_FOUND.get());
+                EasterEggItem.dropRandomFromEntity(entity, 2, player);
 
             } else if (entity.getType() == EntityType.ELDER_GUARDIAN){
                 EasterEggItem.dropRandomFromEntity(entity, player);
@@ -82,6 +92,42 @@ public class ModEvents {
                 if (randomSource.nextFloat() < EasterEggItem.MONSTER_DROP_CHANCE)
                     EasterEggItem.dropRandomFromEntity(entity, player);
             }
+        }
+
+        @SubscribeEvent
+        public static void onAttachCapabilitiesLiving(AttachCapabilitiesEvent<Entity> event){
+            if (event.getObject() instanceof LivingEntity){
+                if (!event.getObject().getCapability(EggTrackerProvider.EGG_TRACKER).isPresent()){
+                    event.addCapability(new ResourceLocation(Easter.MOD_ID, "egg_tracker"), new EggTrackerProvider());
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerCloned(PlayerEvent.Clone event){
+            if (event.isWasDeath()){
+                event.getOriginal().getCapability(EggTrackerProvider.EGG_TRACKER).ifPresent(oldStore -> {
+                    event.getOriginal().getCapability(EggTrackerProvider.EGG_TRACKER).ifPresent(newStore ->{
+                        newStore.copyFrom(oldStore);
+                    });
+                });
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerJoinWorld(EntityJoinLevelEvent event){
+            if (!event.getLevel().isClientSide()){
+                if (event.getEntity() instanceof ServerPlayer player){
+                    player.getCapability(EggTrackerProvider.EGG_TRACKER).ifPresent(eggTracker ->{
+                        ModMessages.sendToPlayer(new EggDataSyncS2CPacket(eggTracker.getEasterEggs(), eggTracker.getGoldenEggs()), player);
+                    });
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onRegisterCapabilities(RegisterCapabilitiesEvent event){
+            event.register(EggTracker.class);
         }
     }
     @Mod.EventBusSubscriber(modid = Easter.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)

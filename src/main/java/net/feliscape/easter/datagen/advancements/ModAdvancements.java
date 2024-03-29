@@ -40,42 +40,43 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
     public static final ModAdvancement
         ROOT = create("root", b -> b.icon(ModItems.STRIPED_RED_EGG.get())
             .title("Easter")
-            .description("You can find Easter Eggs by doing almost anything!")
-            .when(InventoryChangeTrigger.TriggerInstance.hasItems(EGGS))
+            .description("Find Easter Eggs by doing almost anything")
+            .whenGet(EGGS)
             .special(ModAdvancement.TaskType.SILENT)),
 
         GOLDEN_EGG = create("golden_egg", b -> b.icon(ModItems.GOLDEN_EGG.get())
             .title("Where's The Goose?")
             .description("Find the rare Golden Egg")
             .whenGetIcon()
-            .special(ModAdvancement.TaskType.SECRET)),
+            .special(ModAdvancement.TaskType.SECRET)
+            .after(ROOT)),
 
-        EGGS_1 = create("eggs_1", b -> b.icon(ModItems.STRIPED_RED_EGG.get())
+        EGGS_1 = create("eggs_one", b -> b.icon(ModItems.STRIPED_RED_EGG.get())
             .title("Got One!")
-            .description("Find your first Easter Eggs")
+            .description("Find your first Easter Egg")
             .when(FoundEasterEggsTrigger.TriggerInstance.amount(MinMaxBounds.Ints.atLeast(1)))
             .after(ROOT)),
-        EGGS_5 = create("eggs_5", b -> b.icon(ModItems.GRASS_EGG.get())
+        EGGS_5 = create("eggs_five", b -> b.icon(ModItems.GRASS_EGG.get())
             .title("Kindergartener")
             .description("Find 5 Easter Eggs")
             .when(FoundEasterEggsTrigger.TriggerInstance.amount(MinMaxBounds.Ints.atLeast(5)))
             .after(ROOT)),
-        EGGS_10 = create("eggs_10", b -> b.icon(ModItems.GREEN_DOTS_EGG.get())
+        EGGS_10 = create("eggs_ten", b -> b.icon(ModItems.GREEN_DOTS_EGG.get())
             .title("Egg Hunter")
             .description("Find 10 Easter Eggs")
             .when(FoundEasterEggsTrigger.TriggerInstance.amount(MinMaxBounds.Ints.atLeast(10)))
             .after(ROOT)),
-        EGGS_20 = create("eggs_20", b -> b.icon(ModItems.SPECKLED_EGG.get())
+        EGGS_20 = create("eggs_twenty", b -> b.icon(ModItems.SPECKLED_EGG.get())
             .title("Winner of the Egg Festival")
             .description("Find 20 Easter Eggs")
             .when(FoundEasterEggsTrigger.TriggerInstance.amount(MinMaxBounds.Ints.atLeast(20)))
             .after(ROOT)),
-        EGGS_50 = create("eggs_50", b -> b.icon(ModItems.STARRY_EGG.get())
+        EGGS_50 = create("eggs_fifty", b -> b.icon(ModItems.STARRY_EGG.get())
             .title("Search Squad")
             .description("Find 50 Easter Eggs")
             .when(FoundEasterEggsTrigger.TriggerInstance.amount(MinMaxBounds.Ints.atLeast(50)))
             .after(ROOT)),
-        EGGS_100 = create("eggs_100", b -> b.icon(ModItems.GOLD_RING_EGG.get())
+        EGGS_100 = create("eggs_hundred", b -> b.icon(ModItems.GOLD_RING_EGG.get())
             .title("Master Egg Hunter")
             .description("Find 100 Easter Eggs")
             .when(FoundEasterEggsTrigger.TriggerInstance.amount(MinMaxBounds.Ints.atLeast(100)))

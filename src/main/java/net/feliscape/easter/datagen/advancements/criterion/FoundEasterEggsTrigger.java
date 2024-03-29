@@ -1,6 +1,5 @@
 package net.feliscape.easter.datagen.advancements.criterion;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.feliscape.easter.Easter;
 import net.feliscape.easter.stats.ModStats;
@@ -8,13 +7,6 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
-import org.apache.logging.log4j.core.jmx.Server;
 
 public class FoundEasterEggsTrigger extends SimpleCriterionTrigger<FoundEasterEggsTrigger.TriggerInstance> {
     static final ResourceLocation ID = new ResourceLocation(Easter.MOD_ID, "found_easter_eggs");
@@ -47,7 +39,7 @@ public class FoundEasterEggsTrigger extends SimpleCriterionTrigger<FoundEasterEg
         }
 
         public boolean matches(ServerPlayer player) {
-            return this.count.matches(player.getStats().getValue(Stats.CUSTOM, ModStats.EASTER_EGGS_FOUND));
+            return this.count.matches(player.getStats().getValue(Stats.CUSTOM, ModStats.EASTER_EGGS_FOUND.get()));
         }
 
         public JsonObject serializeToJson(SerializationContext pConditions) {
