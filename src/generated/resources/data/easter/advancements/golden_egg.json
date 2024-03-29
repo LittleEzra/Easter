@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "0": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "easter:golden_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.easter.golden_egg.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "easter:golden_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.easter.golden_egg"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

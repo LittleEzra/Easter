@@ -1,0 +1,69 @@
+{
+  "criteria": {
+    "0": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "easter:striped_red_egg"
+            ]
+          },
+          {
+            "items": [
+              "easter:speckled_egg"
+            ]
+          },
+          {
+            "items": [
+              "easter:starry_egg"
+            ]
+          },
+          {
+            "items": [
+              "easter:green_dots_egg"
+            ]
+          },
+          {
+            "items": [
+              "easter:grass_egg"
+            ]
+          },
+          {
+            "items": [
+              "easter:gold_ring_egg"
+            ]
+          },
+          {
+            "items": [
+              "easter:golden_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "easter:textures/gui/advancements.png",
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.easter.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "easter:striped_red_egg"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.easter.root"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

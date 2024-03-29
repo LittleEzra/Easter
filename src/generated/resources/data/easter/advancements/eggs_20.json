@@ -1,0 +1,35 @@
+{
+  "parent": "easter:root",
+  "criteria": {
+    "0": {
+      "conditions": {
+        "count": {
+          "min": 20
+        }
+      },
+      "trigger": "easter:found_easter_eggs"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.easter.eggs_20.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "easter:speckled_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.easter.eggs_20"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

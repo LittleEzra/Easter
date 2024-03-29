@@ -1,0 +1,10 @@
+{
+  "entries": [
+    "easter:easter_eggs_from_snowy_village",
+    "easter:easter_eggs_from_taiga_village",
+    "easter:easter_eggs_from_desert_village",
+    "easter:easter_eggs_from_plains_village",
+    "easter:easter_eggs_from_savanna_village"
+  ],
+  "replace": false
+}

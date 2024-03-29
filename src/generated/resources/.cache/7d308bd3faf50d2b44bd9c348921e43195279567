@@ -1,0 +1,7 @@
+// 1.20.1	2024-03-29T12:30:39.8220867	Global Loot Modifiers : easter
+f660146e2fa5aa81d161960dae8a2ef4cb742dca data/easter/loot_modifiers/easter_eggs_from_desert_village.json
+5c25cd791f420a01fbc931a7e67bae041b98d2e8 data/easter/loot_modifiers/easter_eggs_from_plains_village.json
+b98e0815d427d6d77c922f13456027f356e173b8 data/easter/loot_modifiers/easter_eggs_from_savanna_village.json
+599d426ab135857ce3f8e9a483c0456a86e56217 data/easter/loot_modifiers/easter_eggs_from_snowy_village.json
+1f44b33c872dd76fa83480fcdbc70775f4633de8 data/easter/loot_modifiers/easter_eggs_from_taiga_village.json
+f7fa2f21b56362bbf40d7739578b9381f2c38c67 data/forge/loot_modifiers/global_loot_modifiers.json
